@@ -5,11 +5,11 @@ import { app } from './app'
 const Pool = pg.Pool
 
 export const pool = new Pool({
-  user: process.env.DB_USER, 
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: Number(process.env.DB_PORT) || 5432,
+  user: config.DB_USER, 
+  host: config.DB_HOST,
+  database: config.DB_DATABASE,
+  password: config.DB_PASSWORD,
+  port: Number(config.DB_PORT) || 5432,
 })
 
 app.listen(config.PORT, () => {
