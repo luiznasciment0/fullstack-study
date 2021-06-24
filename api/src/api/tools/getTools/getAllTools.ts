@@ -1,5 +1,5 @@
 import { Response } from 'express'
-import { pool } from '../../index'
+import { pool } from '../../../index'
 
 const getAllTools = (res: Response) => {
   try {
