@@ -1,7 +1,7 @@
 import express from 'express'
-import getTools from './api/tools/getTools'
+import tools from './api/tools'
 
 export const app = express()
 
 // routes
-app.get('/tools', getTools)
+app.use('/tools', tools)
