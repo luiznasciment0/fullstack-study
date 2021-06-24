@@ -14,19 +14,23 @@ const createTool = (req: Request, res: Response) => {
   
   if (!hasBody) return
 
-  const { title, link, description, tags } = body
+  try {
+    const { title, link, description, tags } = body
 
-  pool.query(
-    'INSERT INTO toolsv3 (title, link, description, tags) VALUES ($1, $2, $3, $4)',
-    [title, link, description, tags],
-    (error, results) => {
-      if (error) {
-        throw error
+    pool.query(
+      'INSERT INTO toolsv3 (title, link, description, tags) VALUES ($1, $2, $3, $4)',
+      [title, link, description, tags],
+      (error, results) => {
+        if (error) {
+          throw error
+        }
+  
+        res.status(201).send(results.rows)
       }
-
-      res.status(201).send(results.rows)
-    }
-  )
+    )
+  } catch (error) {
+    res.status(500)
+  }
 }
 
 export default createTool
