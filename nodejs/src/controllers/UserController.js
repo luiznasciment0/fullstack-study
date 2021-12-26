@@ -45,4 +45,9 @@ module.exports = {
     user.name = body.name;
     return response.send(200, user);
   },
+  deleteUserById(request, response) {
+    const { id } = request.params;
+    const _users = users.filter((user) => user.id !== Number(id));
+    return response.send(200, _users);
+  },
 };
