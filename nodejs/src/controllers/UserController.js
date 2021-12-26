@@ -34,20 +34,31 @@ module.exports = {
     users.push(newUser);
     return response.send(200, newUser);
   },
-  editUserById(request, response) {
+  updateUser(request, response) {
     const { id } = request.params;
-    const { body } = request;
+    const { name } = request.body;
 
-    const user = users.find((user) => user.id === Number(id));
-    if (!user) {
+    const userExists = users.find((user) => user.id === Number(id));
+    if (!userExists) {
       return response.send(404, { error: `User ${id} Was Not found` });
     }
-    user.name = body.name;
-    return response.send(200, user);
+
+    users = users.map((user) => {
+      if (user.id === Number(id)) {
+        return {
+          ...user,
+          name,
+        };
+      }
+
+      return user;
+    });
+
+    return response.send(200, { id, name });
   },
-  deleteUserById(request, response) {
+  deleteUser(request, response) {
     const { id } = request.params;
-    const _users = users.filter((user) => user.id !== Number(id));
-    return response.send(200, _users);
+    users = users.filter((user) => user.id !== Number(id));
+    return response.send(200, { deleted: true });
   },
 };
