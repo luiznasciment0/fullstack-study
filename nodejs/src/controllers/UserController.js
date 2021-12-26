@@ -22,7 +22,7 @@ module.exports = {
       return response.send(404, { error: `User ${id} Was Not found` });
     }
 
-    response.send(200, user);
+    return response.send(200, user);
   },
   createUser(request, response) {
     const { body } = request;
@@ -33,5 +33,16 @@ module.exports = {
     };
     users.push(newUser);
     return response.send(200, newUser);
+  },
+  editUserById(request, response) {
+    const { id } = request.params;
+    const { body } = request;
+
+    const user = users.find((user) => user.id === Number(id));
+    if (!user) {
+      return response.send(404, { error: `User ${id} Was Not found` });
+    }
+    user.name = body.name;
+    return response.send(200, user);
   },
 };
